@@ -1,0 +1,48 @@
+1. Беремо два блоки 0 (С0=С1=0)
+receive(ciphertext)
+де ciphertext = 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+Отримуємо 4287f39b5b34bea3fe5aebc42a21284f ee418331b289b1729b52c536bd92600d
+P0 = 4287f39b5b34bea3fe5aebc42a21284f
+P1 = ee418331b289b1729b52c536bd92600d
+
+2. P0 XOR P1
+XOR tool
+4287f39b5b34bea3fe5aebc42a21284f XOR ee418331b289b1729b52c536bd92600d = acc670aae9bd0fd165082ef297b34842
+
+Отже, маємо IV=K=acc670aae9bd0fd165082ef297b34842
+3. Знаходимо FLAG
+get_flag(key)
+де key = acc670aae9bd0fd165082ef297b34842
+
+Отримуємо 
+{"plaintext":"63727970746f7b35306d335f703330706c335f64306e375f3768316e6b5f49565f31355f316d70307237346e375f3f7d"}
+
+KEY = acc670aae9bd0fd165082ef297b34842
+FLAG = 63727970746f7b35306d335f703330706c335f64306e375f3768316e6b5f49565f31355f316d70307237346e375f3f7d
+
+------------------------------------------------------------------------------------------------------
+
+Для перевірки локально адаптовано функцію шифрування
+
+pip install requests pycryptodome
+KEY = KEY = bytes.fromhex("acc670aae9bd0fd165082ef297b34842")
+
+from Crypto.Cipher import AES
+
+def encrypt(plaintext):
+    plaintext = bytes.fromhex(plaintext)
+    if len(plaintext) % 16 != 0:
+        return {"error": "Data length must be multiple of 16"}
+
+    cipher = AES.new(KEY, AES.MODE_CBC, KEY)
+    encrypted = cipher.encrypt(plaintext)
+
+    return {"ciphertext": encrypted.hex()}
+
+print(encrypt("00" * 32))
+
+Результатом виконання функції encrypt (із знайденим ключем) з аргументом 0 розміром 32 байт (2 блоки) буде 
+{'ciphertext': '33a689f7d458770d1c1744e5ae5e38a2a5797f5840a3669fdfa40df66b491ad3'}, 
+що співпадає з результатом шифрування на сайті. Аналогічно перевірено роботу функції
+розшифрування receive

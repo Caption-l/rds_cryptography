@@ -1,0 +1,14 @@
+get_cookie() = 3d31d0b201e06e187d8962c3b6abbb27 92f0a13aef3e58bed5badebd7ee4e47d3c4b26099e8239061fcd3e585c2f7d89
+
+IV = 3d31d0b201e06e187d8962c3b6abbb27
+D(C0) = 92f0a13aef3e58bed5badebd7ee4e47d3c4b26099e8239061fcd3e585c2f7d89
+
+"admin=True" -> hex() -> 61646d696e3d547275653b3030303030  (до 32 байт доповняємо справа символами ";0...0")
+
+IV XOR hex("admin=True") = 3d31d0b201e06e187d8962c3b6abbb27 XOR 61646d696e3d547275653b3030303030 = 5c55bddb6fdd3a6a08ec59f3869b8b17
+
+IV' = IV XOR hex("admin=True") XOR hex("admin=False") = 5c55bddb6fdd3a6a08ec59f3869b8b17 ^ 61646d696e3d46616c73653b30303030 = 3d31d0b201e07c0b649f3cc8b6abbb27
+
+Підставляємо IV' = 3d31d0b201e07c0b649f3cc8b6abbb27 у  check_admin(cookie,iv): 
+check_admin(cookie,IV') = check_admin(92f0a13aef3e58bed5badebd7ee4e47d3c4b26099e8239061fcd3e585c2f7d89,3d31d0b201e07c0b649f3cc8b6abbb27) ->
+->{"flag":"crypto{4u7h3n71c4710n_15_3553n714l}"} Отримано FLAG
