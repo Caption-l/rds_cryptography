@@ -1,0 +1,24 @@
+Оскільки маємо вхідні значення - паролі, які мають низьку ентропію, то перед внесенням значень в БД необхідно їх "посолити") і захешувати.
+Оскільки працюємо з паролями користувачів до вебсервісу, і серверна частина повинна бути спроможна швидко опрацьовувати запити за певного навантаження, то виберу варіант Argon2id з параметрами, які не вимагають значних обчислювальних ресурсів та памʼяті:
+time_cost=2
+memory_cost=65536 
+parallelism=4
+
+Якщо ж специфікація повинна відповідати вимогам FIPS (стандарт NIST), то необхідно використовувати PBKDF2.
+
+Ще одне зауваження: у N4 - пароль розміром 176 символів, і bcrypt не зовсім коректно працюватиме з паролями такої довжини, що також вказує на оптимальність Argon2id для даної задачі.
+
+Результати (хеші паролів):
+Пароль 1: $argon2id$v=19$m=65536,t=2,p=4$3IMk+BozG4cMLHlmPa/8gw$gtPzLqoKd5bCD8MfpnNUbne7P6yBsEgKUTCo3RUJO9g
+відповідно, сам хеш - gtPzLqoKd5bCD8MfpnNUbne7P6yBsEgKUTCo3RUJO9g 
+
+Пароль 2: $argon2id$v=19$m=65536,t=2,p=4$ahvqGDiWRqKIlHFjN47lYg$G343lck5NAon3RYEVqiD/Now2/Z4Ym1weu7Zje1uvAw
+відповідно, сам хеш - G343lck5NAon3RYEVqiD/Now2/Z4Ym1weu7Zje1uvAw 
+ 
+Пароль 3: $argon2id$v=19$m=65536,t=2,p=4$/pKUiSWpFVMe2dbyuNL1TQ$1+trtixhpfJJz+Szw1BhR+Ldsl9B2Q6u/aw0Is90oks
+відповідно, сам хеш - 1+trtixhpfJJz+Szw1BhR+Ldsl9B2Q6u/aw0Is90oks
+
+Пароль 4: $argon2id$v=19$m=65536,t=2,p=4$ja59ULO51/m4favsZMYazQ$id4naT+iuamcyx1QeD21Ktj+tl5xZoMl5HRAqlgvqC0
+відповідно, сам хеш  - id4naT+iuamcyx1QeD21Ktj+tl5xZoMl5HRAqlgvqC0
+
+
