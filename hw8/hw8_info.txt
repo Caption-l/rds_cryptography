@@ -1,0 +1,10 @@
+  1. Відкритий довгостроковий ключ підпису Боба у форматі PEM.
+-----BEGIN PUBLIC KEY-----
+MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEedNHl5hOF4Wi7iV77BYPMDSiUmh43DV6
+tRGDCDbAFbtYjgvFMtS/KZFneFQybQxlCaD0V0UNKpCfwoRmvVik8g==
+-----END PUBLIC KEY-----
+  2. Відкритий ключ ECDH (значення Y = yP з боку Боба) у форматі hex.
+9b8e148f93756f6685d55f493594d6aa8b9d278872e8fef8f4fa42b56a136136
+  3. Підпис відкритого ключа ECDH у форматі hex.
+304402204664e3d80365c03b5551832db13d9469a8c165164d6b912026600e6156b7ef6902200e5911edcadb6eacac366a694509c666cd6b4e3fa258948cf342673e46510d92
+
